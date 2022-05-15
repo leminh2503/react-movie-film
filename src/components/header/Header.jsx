@@ -1,32 +1,41 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 import './header.scss';
 
-import logo from '../../assets/tmovie.png';
+import logo                                                 from '../../assets/tmovie.png';
 
-const headerNav = [
-    {
-        display: 'Home',
-        path: '/'
-    },
-    {
-        display: 'Movies',
-        path: '/movie'
-    },
-    {
-        display: 'TV Series',
-        path: '/tv'
-    }
-];
-
+import Button from "../button/Button"
 const Header = () => {
+    const username = localStorage.getItem("username")
 
-    const { pathname } = useLocation();
+    const headerNav = [
+        {
+            display: 'Home',
+            path: '/'
+        },
+        {
+            display: 'Movies',
+            path: '/movie'
+        },
+        {
+            display: username ? "Upload" : "Login",
+            path: username ? "/upload" : "/login",
+        }
+    ];
+
+    const {pathname} = useLocation();
+
     const headerRef = useRef(null);
 
     const active = headerNav.findIndex(e => e.path === pathname);
+
+    const handleLogout = () => {
+        console.log("logout")
+        localStorage.clear();
+        window.location.reload();
+    }
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -35,7 +44,7 @@ const Header = () => {
             } else {
                 headerRef.current.classList.remove('shrink');
             }
-        }
+        };
         window.addEventListener('scroll', shrinkHeader);
         return () => {
             window.removeEventListener('scroll', shrinkHeader);
@@ -43,26 +52,34 @@ const Header = () => {
     }, []);
 
     return (
-        <div ref={headerRef} className="header">
-            <div className="header__wrap container">
-                <div className="logo">
-                    <img src={logo} alt="" />
-                    <Link to="/">MinhMovies</Link>
+        <>
+            <div ref={headerRef} className="header">
+                <div className="header__wrap container">
+                    <div className="logo">
+                        <img src={logo} alt=""/>
+                        <Link to="/">MinhMovies</Link>
+                    </div>
+                    <ul className="header__nav">
+                        {
+                            headerNav.map((e, i) => (
+                                <li key={i} className={`${i === active ? 'active' : ''}`}>
+                                    <Link to={e.path}>
+                                        {e.display}
+                                    </Link>
+                                </li>
+                            ))
+                        }
+                        {
+                            username && <Button onClick={handleLogout} >
+                                Logout
+                            </Button>
+                        }
+                    </ul>
                 </div>
-                <ul className="header__nav">
-                    {
-                        headerNav.map((e, i) => (
-                            <li key={i} className={`${i === active ? 'active' : ''}`}>
-                                <Link to={e.path}>
-                                    {e.display}
-                                </Link>
-                            </li>
-                        ))
-                    }
-                </ul>
+
             </div>
-        </div>
+        </>
     );
-}
+};
 
 export default Header;
