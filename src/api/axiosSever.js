@@ -3,16 +3,16 @@ import queryString from 'query-string';
 
 import apiConfig from './apiConfig';
 
-const axiosClient = axios.create({
-    baseURL: apiConfig.baseUrl,
+const axiosSever = axios.create({
+    baseURL: apiConfig.url,
     headers: {
         'Content-Type': 'application/json'
     },
     mode: "no-cors",
-    paramsSerializer: params => queryString.stringify({...params, api_key: apiConfig.apiKey})
+    paramsSerializer: params => queryString.stringify({...params,})
 });
 
-axiosClient.interceptors.request.use(
+axiosSever.interceptors.request.use(
     function (config) {
         // Attach token to request if exists
         // Refresh token
@@ -32,7 +32,7 @@ axiosClient.interceptors.request.use(
     }
 )
 
-axiosClient.interceptors.response.use((response) => {
+axiosSever.interceptors.response.use((response) => {
     if (response && response.data) {
         return response.data;
     }
@@ -42,4 +42,4 @@ axiosClient.interceptors.response.use((response) => {
     throw error;
 });
 
-export default axiosClient;
+export default axiosSever;

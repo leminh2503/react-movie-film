@@ -1,4 +1,5 @@
 import axiosClient from "./axiosClient";
+import axiosSever from "./axiosSever";
 
 export const category = {
     movie: 'movie',
@@ -46,6 +47,22 @@ const tmdbApi = {
         const url = category[cate] + '/' + id + '/similar';
         return axiosClient.get(url, {params: {}});
     },
+    login: (data) => {
+        const url = "auth/login"
+        return axiosSever.post(url, data);
+    },
+    createMovies: (data) => {
+        const url = "movies/create"
+        return axiosSever.post(url, data);
+    },
+    getMovies: (params) => {
+        const url = "movies/"
+        return axiosSever.get(url, params)
+    },
+    detailUpload: (id, params) => {
+        const url = `movies/find/${id}`;
+        return axiosSever.get(url, params)
+    }
 }
 
 export default tmdbApi;
