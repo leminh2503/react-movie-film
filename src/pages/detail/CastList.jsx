@@ -18,6 +18,9 @@ const CastList = props => {
         }
         getCredits();
     }, [category, props.id]);
+
+    console.log(casts)
+
     return (
         <div className="casts">
             {

@@ -14,6 +14,10 @@ const Detail = () => {
 
     const { category, id } = useParams();
 
+    const local = useParams();
+
+    console.log(local);
+
     const [item, setItem] = useState(null);
 
     useEffect(() => {
