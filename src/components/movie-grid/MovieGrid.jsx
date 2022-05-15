@@ -6,6 +6,7 @@ import './movie-grid.scss';
 import MovieCard from '../movie-card/MovieCard';
 import Button, { OutlineButton } from '../button/Button';
 import Input from '../input/Input'
+import MovieCardUpload from '../movie-card-upload/MovieCardUpload'
 
 import tmdbApi, { category, movieType, tvType } from '../../api/tmdbApi';
 
@@ -19,27 +20,41 @@ const MovieGrid = props => {
     const { keyword } = useParams();
 
     useEffect(() => {
-        const getList = async () => {
-            let response = null;
-            if (keyword === undefined) {
-                const params = {};
-                switch(props.category) {
-                    case category.movie:
-                        response = await tmdbApi.getMoviesList(movieType.upcoming, {params});
-                        break;
-                    default:
-                        response = await tmdbApi.getTvList(tvType.popular, {params});
+        if(props.category) {
+            const getList = async () => {
+                let response = null;
+                if (keyword === undefined) {
+                    const params = {};
+                    switch(props.category) {
+                        case category.movie:
+                            response = await tmdbApi.getMoviesList(movieType.upcoming, {params});
+                            break;
+                        default:
+                            response = await tmdbApi.getTvList(tvType.popular, {params});
+                    }
+                } else {
+                    const params = {
+                        query: keyword
+                    }
+                    response = await tmdbApi.search(props.category, {params});
                 }
-            } else {
-                const params = {
-                    query: keyword
-                }
-                response = await tmdbApi.search(props.category, {params});
+                setItems(response.results);
+                setTotalPage(response.total_pages);
             }
-            setItems(response.results);
-            setTotalPage(response.total_pages);
+            getList();
+        } else {
+            const getMovies = async () => {
+                const params = {page: 1}
+                try {
+                    const response = await tmdbApi.getMovies( {params});
+                    console.log("keet qua: ", response);
+                    setItems(response)
+                } catch {
+                    console.log('error');
+                }
+            }
+            getMovies();
         }
-        getList();
     }, [props.category, keyword]);
 
     const loadMore = async () => {
@@ -71,11 +86,18 @@ const MovieGrid = props => {
             <div className="section mb-3">
                 <MovieSearch category={props.category} keyword={keyword}/>
             </div>
-            <div className="movie-grid">
-                {
-                    items.map((item, i) => <MovieCard category={props.category} item={item} key={i}/>)
-                }
-            </div>
+            {
+                props.category ? (<div className="movie-grid">
+                    {
+                        items.map((item, i) => <MovieCard category={props.category} item={item} key={i}/>)
+                    }
+                </div> ) : (
+                    <div className="movie-grid">
+                    {
+                        items.map((item, i) => <MovieCardUpload item={item} key={i}/>)
+                    }
+                </div> )
+            }
             {
                 page < totalPage ? (
                     <div className="movie-grid__loadmore">

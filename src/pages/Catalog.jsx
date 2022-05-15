@@ -13,21 +13,29 @@ const Catalog = () => {
 
     const { category } = useParams();
 
-    const local = useParams();
-
     return (
         <>
             <PageHeader>
                 {category === "movie" && 'Movies'}
                 { category === "login" && "Login"}
                 { category === "upload" && "Upload"}
+                { category === "user" && "Movie Upload"}
             </PageHeader>
             { category === cate.movie &&
                 <div className="container">
                     <div className="section mb-3">
-                        <MovieGrid category={category}/>
+                        <MovieGrid category={category} />
                     </div>
                 </div>
+            }
+            {
+                category === "user" && (
+                    <div className="container">
+                        <div className="section mb-3">
+                            <MovieGrid />
+                        </div>
+                    </div>
+                )
             }
             { category === "login" && <Login />}
             { category === "upload" && <Upload />}

@@ -75,7 +75,7 @@ const Upload = () => {
                 </Row>
                 <FormGroup>
                     <Label for="exampleAddress">
-                        Link ảnh
+                        Banner
                     </Label>
                     <Input
                         id="exampleAddress"
@@ -87,7 +87,7 @@ const Upload = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleAddress2">
-                        imgTitle
+                        Thumbnail
                     </Label>
                     <Input
                         id="exampleAddress2"
@@ -101,7 +101,7 @@ const Upload = () => {
                     <Col md={12}>
                         <FormGroup>
                             <Label for="exampleCity">
-                                imgSm
+                                Ảnh Con
                             </Label>
                             <Input
                                 id="exampleCity"
@@ -114,7 +114,7 @@ const Upload = () => {
                     <Col md={12}>
                         <FormGroup>
                             <Label for="exampleState">
-                                trailer
+                                Trailer
                             </Label>
                             <Input
                                 id="exampleState"
@@ -127,7 +127,7 @@ const Upload = () => {
                     <Col md={12}>
                         <FormGroup>
                             <Label for="exampleZip">
-                                video
+                                Video
                             </Label>
                             <Input
                                 id="exampleZip"
@@ -140,21 +140,7 @@ const Upload = () => {
                     <Col md={12}>
                         <FormGroup>
                             <Label for="exampleZip">
-                                limit
-                            </Label>
-                            <Input
-                                id="exampleZip"
-                                name="limit"
-                                type="number"
-                                value={value.limit}
-                                onChange={(e) => handleOnChange(e, "limit")}
-                            />
-                        </FormGroup>
-                    </Col>
-                    <Col md={12}>
-                        <FormGroup>
-                            <Label for="exampleZip">
-                                genre
+                                Thể Loại
                             </Label>
                             <Input
                                 id="exampleZip"
