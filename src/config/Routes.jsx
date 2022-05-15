@@ -4,11 +4,16 @@ import { Route, Switch } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import Catalog from '../pages/Catalog';
-import Detail     from '../pages/detail/Detail';
+import Detail       from '../pages/detail/Detail';
+import DetailUpload from "../pages/detail/DetailUpload";
 
 const Routes = () => {
     return (
         <Switch>
+            <Route
+                path="/user/:id"
+                component={DetailUpload}
+            />
             <Route
                 path='/:category/search/:keyword'
                 component={Catalog}

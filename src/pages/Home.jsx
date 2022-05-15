@@ -1,17 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import { Link }           from 'react-router-dom';
 
 import { OutlineButton } from '../components/button/Button';
 import HeroSlide from '../components/hero-slide/HeroSlide';
-import MovieList from '../components/movie-list/MovieList';
+import MovieList   from '../components/movie-list/MovieList';
+import MovieUpload from "../components/movie-upload/MovieUpload";
 
-import { category, movieType, tvType } from '../api/tmdbApi';
+import tmdbApi, { category, movieType, tvType,  getMovies} from '../api/tmdbApi';
+
 
 const Home = () => {
     return (
         <>
             <HeroSlide/>
             <div className="container">
+                <div className="section mb-3">
+                    <div className="section__header mb-2">
+                        <h2>Movies Upload</h2>
+                        <Link to="/movie">
+                            <OutlineButton className="small">View more</OutlineButton>
+                        </Link>
+                    </div>
+                    <MovieUpload />
+                </div>
+
                 <div className="section mb-3">
                     <div className="section__header mb-2">
                         <h2>Trending Movies</h2>

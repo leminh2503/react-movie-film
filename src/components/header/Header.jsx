@@ -8,7 +8,7 @@ import logo                                                 from '../../assets/t
 
 import Button from "../button/Button"
 const Header = () => {
-    const username = localStorage.getItem("username")
+    const accessToken = localStorage.getItem("access_token")
 
     const headerNav = [
         {
@@ -20,8 +20,8 @@ const Header = () => {
             path: '/movie'
         },
         {
-            display: username ? "Upload" : "Login",
-            path: username ? "/upload" : "/login",
+            display: accessToken ? "Upload" : "Login",
+            path: accessToken ? "/upload" : "/login",
         }
     ];
 
@@ -70,7 +70,7 @@ const Header = () => {
                             ))
                         }
                         {
-                            username && <Button onClick={handleLogout} >
+                            accessToken && <Button onClick={handleLogout} >
                                 Logout
                             </Button>
                         }

@@ -13,6 +13,8 @@ const Catalog = () => {
 
     const { category } = useParams();
 
+    const local = useParams();
+
     return (
         <>
             <PageHeader>

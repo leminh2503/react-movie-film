@@ -1,6 +1,10 @@
 import {Button, Form, FormGroup, Input, Label} from "reactstrap";
-import React, {useState}                                 from "react";
+import React, {useState}                       from "react";
 import {useHistory}                            from "react-router-dom";
+import {requestOptions}                        from "../../api/config";
+import apiConfig                               from "../../api/apiConfig";
+import axios                                   from 'axios';
+import tmdbApi                                 from "../../api/tmdbApi";
 import "./login.scss";
 
 const Login = () => {
@@ -8,15 +12,23 @@ const Login = () => {
 
     const [userName, setUserName] = useState("");
 
-    const [password, setPassword] = useState("")
+    const [password, setPassword] = useState("");
+
+    const login = async () => {
+        try {
+            const params = {username: userName, password: password};
+            const response = await tmdbApi.login(params);
+            console.log('Fetch products successfully: ', response.accessToken);
+            localStorage.setItem("access_token", response.accessToken);
+            history.push("/")
+        } catch (error) {
+            console.log('Failed to fetch product list: ', error);
+        }
+    };
 
     const handleSubmit = () => {
-        console.log(userName);
-        console.log(password);
-        localStorage.setItem ('username', userName);
-        localStorage.setItem ('password', password);
-        history.push("/");
-    }
+        login();
+    };
     return (
         <div className="login">
             <Form inline>
@@ -58,7 +70,7 @@ const Login = () => {
                 </Button>
             </Form>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
