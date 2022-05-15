@@ -1,6 +1,6 @@
 import React, {useRef, useEffect, useState} from 'react';
 
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 
 import './header.scss';
 
@@ -9,6 +9,8 @@ import logo                                                 from '../../assets/t
 import Button from "../button/Button"
 const Header = () => {
     const accessToken = localStorage.getItem("access_token")
+
+    const history = useHistory();
 
     const headerNav = [
         {
@@ -32,9 +34,8 @@ const Header = () => {
     const active = headerNav.findIndex(e => e.path === pathname);
 
     const handleLogout = () => {
-        console.log("logout")
         localStorage.clear();
-        window.location.reload();
+        history.push("/");
     }
 
     useEffect(() => {
